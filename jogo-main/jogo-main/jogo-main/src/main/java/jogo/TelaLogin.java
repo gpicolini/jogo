@@ -5,8 +5,11 @@ import java.awt.event.*;
 
 public class TelaLogin {
 
-    public TelaLogin() 
+    private Jogo m_parent;
+
+    public TelaLogin(Jogo jogo) 
     {
+        m_parent = jogo;
     }
 
     public void Show() {
@@ -53,13 +56,14 @@ public class TelaLogin {
                 String usuario = campoUser.getText();
                 String senha = new String(campoSenha.getPassword());
 
-                String nome = BancoDados.autenticar(usuario, senha);
+                String nome = BancoDados.autenticar(m_parent.conn, usuario, senha);
 
                 if (nome != null) {
                     JOptionPane.showMessageDialog(null,
                         "Seja Muito Bem-vindo ao Sistema, " + nome + "!");
 
                     frame.dispose();
+                    m_parent.Cadastro.Show();
 
                 } else {
                     JOptionPane.showMessageDialog(null,

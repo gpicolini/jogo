@@ -1,29 +1,12 @@
 package jogo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 public class Jogo {
     
-    private static final String URL = "mysql://root:TUEbJashZWrUFTRZyBeIYBXtUZEUILVG@trolley.proxy.rlwy.net:52251/railway";
-    private static final String USER = "root";
-    private static final String PASSWORD = "TUEbJashZWrUFTRZyBeIYBXtUZEUILVG";
-
-    public Connection conn;
-
     public BancoDados m_db;
-    
-    public TelaLogin Login;
+    private TelaLogin m_login = new TelaLogin();
 
-    public TelaCadastro Cadastro;
-    
-    public Jogo() throws SQLException {
-        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+    public Jogo() {
 
-        Login = new TelaLogin(this);
-        Cadastro = new TelaCadastro(this);
-
-        Login.Show();
-    };
+        m_login.Show();
+    }
 }

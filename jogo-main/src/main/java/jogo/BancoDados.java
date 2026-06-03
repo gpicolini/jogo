@@ -1,16 +1,18 @@
 package jogo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class BancoDados {
 
-    
+    private static final String URL = "jdbc:mysql://localhost:3306/login_system";
+    private static final String USER = "root";
+    private static final String PASSWORD = "TrT@@##@90";
 
-    public static String autenticar(Connection conn, String usuario, String senha) {
+    public static String autenticar(String usuario, String senha) {
 
         try {
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
             String sql = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -26,8 +28,11 @@ public class BancoDados {
                     nome = usuario;
                 }
 
+                conn.close();
                 return nome;
             }
+
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,31 +41,4 @@ public class BancoDados {
         return null;
     }
 
-
-
-    public static boolean cadastrar (Connection conn, String nome, String usuario, String senha) {
-        try {
-            String sql = "INSERT INTO usuarios (nome, usuario, senha) VALUES (?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setString (1, nome);
-            stmt.setString(2, usuario);
-            stmt.setString(3,senha);
-
-            stmt.executeUpdate();
-
-            return true;
-
-    
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
 }
-
-
-
